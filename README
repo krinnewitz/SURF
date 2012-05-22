@@ -8,7 +8,7 @@ This is an implementation of an image comparison method using SURF features.
 
 It uses the OpenCV implementation of SURF feature extraction.
 The main purpose is to evaluate how successful this method can be used to 
-apply textures in 3d reconstrctions.
+apply textures in 3d reconstructions.
 
 2. Requirements
 ===============
