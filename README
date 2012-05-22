@@ -1,0 +1,23 @@
+0. Author
+=========
+The provided code is written by Kim Oliver Rinnewitz (krinnewitz@uos.de)
+
+1. Description
+==============
+This is an implementation of an image comparison method using SURF features.
+
+It uses the OpenCV implementation of SURF feature extraction.
+The main purpose is to evaluate how successful this method can be used to 
+apply textures in 3d reconstrctions.
+
+2. Requirements
+===============
+You need to have a recent version of OpenCV installed. 
+
+3. Compiling
+============
+You can compile the program by entering the following commands on the command line:
+
+    mkdir build && cd build
+    cmake ..
+    make
