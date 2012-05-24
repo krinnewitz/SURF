@@ -21,7 +21,7 @@ using namespace std;
 /**
  * \brief	Compares the two given sets of float vectors. It matches the
  *		first vector of the first set with the best fitting vector of
- *		the second set and then matches the second vector of the fist
+ *		the second set and then matches the second vector of the first
  *		set with the best fitting vector of the second set excluding
  *		the vector that has already been matched and so on.
  *		This method WON't find an optimal matching between the two
@@ -51,7 +51,7 @@ double matchDescriptors(vector<float> descriptors1, vector<float> descriptors2, 
 		//search best match
 		for (int m = 0; m < more.size(); m+= descriptorSize)
 		{
-			//calculate squared euklidean distance 
+			//calculate squared euclidean distance 
 			double distance = 0;
 			for (int v = 0; v < descriptorSize; v++)
 			{
