@@ -17,6 +17,62 @@
 
 using namespace std;
 
+
+/**
+ * \brief	Compares the two given sets of float vectors. It matches the
+ *		first vector of the first set with the best fitting vector of
+ *		the second set and then matches the second vector of the fist
+ *		set with the best fitting vector of the second set excluding
+ *		the vector that has already been matched and so on.
+ *		This method WON't find an optimal matching between the two
+ *		sets of vectors. Better results may be achieved by heuristics.
+ *
+ * \param	descriptors1	The first set of vectors (="descriptors")
+ * \param	descriptors2	The second set of vectors (="descriptors")
+ * \param	descriptorSize	The length of every vector in the sets. 
+ *
+ * \return	The sum of all squared distances in the resulting matching.
+ */
+double matchDescriptors(vector<float> descriptors1, vector<float> descriptors2, const int descriptorSize)
+{
+	//This will hold the sum of all distances
+	double result = 0;
+	
+	// less points to the smaller vector
+	vector<float> &less = descriptors1.size() <  descriptors2.size() ? descriptors1 : descriptors2;
+
+	// more points to the bigger vector
+	vector<float> &more = descriptors1.size() >= descriptors2.size() ? descriptors1 : descriptors2;
+
+	for (int l = 0; l < less.size(); l+= descriptorSize)
+	{
+		int bestMatchIndex = 0;
+		double bestDistance = FLT_MAX;
+		//search best match
+		for (int m = 0; m < more.size(); m+= descriptorSize)
+		{
+			//calculate squared euklidean distance 
+			double distance = 0;
+			for (int v = 0; v < descriptorSize; v++)
+			{
+				distance += (less[l+v] - more[m+v]) * (less[l+v] - more[m+v]);
+			}
+
+			if (distance < bestDistance)
+			{
+				bestDistance = distance;
+				bestMatchIndex = m;
+			}
+		}
+		
+		result += bestDistance;
+	
+		//erase match to avoid collisions 
+		more.erase(more.begin() + bestMatchIndex, more.begin() + bestMatchIndex + descriptorSize);	
+	}
+	return result;
+}
+
 /**
  * \brief	Compares two images using SURF features
  *
@@ -52,16 +108,7 @@ double compareImagesSURF(cv::Mat &image1, cv::Mat &image2, double ht)
 	surf(img2, cv::Mat(), keyPoints2, descriptors2);	
 
 	//compare features
-	//TODO
-	cout<<keyPoints1.size()<<endl;
-	cout<<surf.descriptorSize()<<endl;
-	cout<<descriptors1.size()<<endl;
-	cout<<"======"<<endl;
-	cout<<keyPoints2.size()<<endl;
-	cout<<surf.descriptorSize()<<endl;
-	cout<<descriptors2.size()<<endl;
-	
-	return 0;
+	return matchDescriptors(descriptors1, descriptors2, surf.descriptorSize());
 }
 
 int main (int argc, char** argv)
