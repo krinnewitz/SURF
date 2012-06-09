@@ -50,7 +50,7 @@ float matchDescriptors(cv::Mat descriptors1, cv::Mat descriptors2)
 	int numGoodMatches = 0;
 	for( int i = 0; i < matches.size(); i++ )
 	{ 
-		if(matches[i].distance < 2 * minDist)
+		if(matches[i].distance <= 2 * minDist)
 		{
 			result += matches[i].distance * matches[i].distance;
 			numGoodMatches++;
