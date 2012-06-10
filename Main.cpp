@@ -41,7 +41,7 @@ float matchDescriptors(cv::Mat descriptors1, cv::Mat descriptors2)
 
 	//search best match
 	double minDist = 100;
-	for (int i = 0; i < descriptors1.rows; i++)
+	for (int i = 0; i < matches.size(); i++)
 	{ 
 		if(matches[i].distance < minDist) minDist = matches[i].distance;
 	}
